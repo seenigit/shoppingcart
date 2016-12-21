@@ -13,7 +13,7 @@ class UserRepository
 
     public function addUser($name, $email, $password)
     {
-        $user = User::where('email',$email)->get();
+        $user = $this->checkUserExistsByEmail($email);
         if($user->isEmpty()) 
         {
             $user = new User();
@@ -24,11 +24,11 @@ class UserRepository
             try{
                 $user->save();
             } catch (Exception $ex) {
-                return ['message' => 'Something went wrong, please try again later.'];
+                return ['status' => false, 'message' => 'Something went wrong, please try again later.'];
             }
-            return ['message' => 'User has been added successfully'];
+            return ['status' => true, 'message' => 'User has been added successfully'];
         }
-        return ['message' => 'This email id already exists'];
+        return ['status' => false, 'message' => 'This email id already exists'];
     }
 
     public function updateUser($userId, $name, $email)
@@ -62,6 +62,12 @@ class UserRepository
     public function getUser($userId)
     {
         $user = User::find($userId);
+        return $user;
+    }
+    
+    public function checkUserExistsByEmail($email)
+    {
+        $user = User::where('email',$email)->get();
         return $user;
     }
 }

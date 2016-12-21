@@ -11,14 +11,19 @@
 |
 */
 
-
-
 Auth::routes();
+
+Route::get('/',array('uses' => 'HomeController@homePage'));
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('admin', function() { return Redirect::to('/admin/login'); });
     Route::get('admin/login',array('uses' => 'AdminController@getLogin'));
     Route::post('admin/login',array('uses' => 'AdminController@postLogin'));
+    
+    Route::get('/login',array('uses' => 'HomeController@loginPage'));
+    Route::post('/login',array('uses' => 'HomeController@postLogin'));
+    Route::get('/signup',array('uses' => 'HomeController@signupPage'));
+    Route::post('/signup',array('uses' => 'HomeController@postSignup'));
 });
 
 /**
@@ -41,6 +46,11 @@ Route::group(['middleware' => 'auth'], function () {
        Route::post('admin/deleteproduct', array('uses' => 'AdminController@deleteProduct'));
        
        Route::post('admin/logout','AdminController@getLogout');
+    
     });
+    
+    Route::group(['middleware' => 'roles:2'], function () {
+       Route::get('/logout',array('uses' => 'HomeController@getLogout'));
+    });
+      
 });
-
