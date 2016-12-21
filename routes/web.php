@@ -11,6 +11,36 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Auth::routes();
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('admin', function() { return Redirect::to('/admin/login'); });
+    Route::get('admin/login',array('uses' => 'AdminController@getLogin'));
+    Route::post('admin/login',array('uses' => 'AdminController@postLogin'));
 });
+
+/**
+ * Authenticated Routes
+ */
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'roles:1'], function () {
+       Route::get('admin/dashboard', array('uses' => 'AdminController@getDashboard'));
+       Route::get('admin/adduser', array('uses' => 'AdminController@addUser'));
+       Route::post('admin/adduser', array('uses' => 'AdminController@addUser'));
+       Route::get('admin/edituser/{userId?}', array('uses' => 'AdminController@editUser'));
+       Route::post('admin/edituser/{userId?}', array('uses' => 'AdminController@editUser'));
+       Route::post('admin/deleteuser', array('uses' => 'AdminController@deleteUser'));
+       
+       Route::get('admin/listproducts', array('uses' => 'AdminController@listProduct'));
+       Route::get('admin/addproduct', array('uses' => 'AdminController@addProduct'));
+       Route::post('admin/addproduct', array('uses' => 'AdminController@addProduct'));
+       Route::get('admin/editproduct/{productId?}', array('uses' => 'AdminController@editProduct'));
+       Route::post('admin/editproduct/{productId?}', array('uses' => 'AdminController@editProduct'));
+       Route::post('admin/deleteproduct', array('uses' => 'AdminController@deleteProduct'));
+       
+       Route::post('admin/logout','AdminController@getLogout');
+    });
+});
+
