@@ -54,9 +54,9 @@ class ProductRepository
         $product->delete();
     }
     
-    public function getProduct($userId)
+    public function getProduct($productId)
     {
-        $product = Product::find($userId);
+        $product = Product::find($productId);
         return $product;
     }
 }

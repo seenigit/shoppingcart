@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Welcome to Shop</title>
+<title>Welcome to Shopping Cart Site</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 <link href="/css/app.css" rel="stylesheet">
 <link href="{{ url("css/frontendstyle.css") }}" rel="stylesheet" type="text/css" media="all">
 <link href="{{ url("css/megamenu.css") }}" rel="stylesheet" type="text/css" media="all">
+<script src="{{ url("js/jquery-3.1.1.min.js") }}"> </script>
 
     </head>
 
@@ -22,7 +23,7 @@
 				<ul>
                                     @if (!Auth::guest())
                                         <li><a href="#">Welcome {{ Auth::user()->name }}</a></li> |
-					<li><a href="#">Checkout</a></li> |
+					<li><a href="{{ url("/viewcart") }}">Checkout</a></li> |
                                         <li><a href="{{ url('/logout') }}">Logout</a></li>
                                     @else
 					<li><a href="/login">Log In</a></li> |
@@ -37,7 +38,7 @@
 	    <div class="wrap">
 			<div class="header-bottom-left">
 				<div class="logo">
-					<a href="#">Shopping Cart</a>
+					<a href="/">Shopping Cart</a>
 				</div>
 				<div class="menu">
 	            <ul class="megamenu skyblue">
@@ -52,7 +53,12 @@
 		</div>
 	   <div class="header-bottom-right">
 	  <div class="tag-list" style="float:right">
-	    <ul class="last"><li><a href="#">Cart(0)</a></li></ul>
+            <ul class="icon1 sub-icon1 profile_img __web-inspector-hide-shortcut__">
+			<li><a class="active-icon c2" href="{{ url("/viewcart") }}"> </a>
+				
+			</li>
+		</ul>
+	    <ul class="last"><li><a href="{{ url("/viewcart") }}">Cart({{ $cartcount }})</a></li></ul>
 	  </div>
     </div>
      <div class="clear"></div>
@@ -63,7 +69,7 @@
 		<div class="footer-bottom">
 			<div class="wrap">
 	             <div class="copy">
-			        <p>© 2016 shop. All rights reserved</p>
+			        <p>© 2016 Shopping Cart. All rights reserved</p>
 		         </div>
 				<div class="f-list2">
 				 <ul>
@@ -78,10 +84,5 @@
 	     </div>
 	</div>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
   </html>

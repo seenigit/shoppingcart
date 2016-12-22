@@ -600,10 +600,10 @@ ul.last li a:hover{
 	margin: 2.7% 0 1% 2.6%;
 } 	
 .span_2_of_3 {
-	width:77.1%;
+	width:100%;
 }
 .span_1_of_3 {
-	width:31.2%;
+	width:22.2%;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
 	-o-transition: all 0.4s ease;

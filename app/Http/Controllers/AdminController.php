@@ -14,6 +14,11 @@ class AdminController extends Controller
      */
     protected $userRepository;
     
+    /**
+     * Instance of Product Repository
+     */
+    protected $productRepository;
+    
     public function __construct(UserRepository $userRepository,
                                 ProductRepository $productRepository)
     {

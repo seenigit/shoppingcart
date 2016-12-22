@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     public function users() {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
     
     public function orderdetails(){
-        $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class);
     }
 }

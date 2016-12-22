@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use App\Repositories\ProductRepository;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
+        /**
+     * Instance of User Repository
      */
-    public function __construct(UserRepository $userRepository)
+    protected $userRepository;
+    
+    /**
+     * Instance of Product Repository
+     */
+    protected $productRepository;
+    
+    public function __construct(UserRepository $userRepository,
+                                ProductRepository $productRepository)
     {
         $this->userRepository = $userRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function homePage()
@@ -70,5 +78,12 @@ class HomeController extends Controller
     {
         \Auth::logout();
         return \Redirect::intended('/');
+    }
+    
+    public function getProducts()
+    {
+        $products = $this->productRepository->getProducts();
+        $returnHTML = view('user.productsection')->with('products', $products)->render();
+        return response()->json(array('success' => true, 'html'=>$returnHTML));
     }
 }

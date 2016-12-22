@@ -14,6 +14,9 @@
 Auth::routes();
 
 Route::get('/',array('uses' => 'HomeController@homePage'));
+Route::get('/getproducts',array('uses' => 'HomeController@getProducts'));
+Route::get('/productdetails/{productId}',array('uses' => 'CartController@getProductDetails'));
+Route::post('/buyproduct',array('uses' => 'CartController@buyProduct'));
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('admin', function() { return Redirect::to('/admin/login'); });
@@ -41,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
        Route::get('admin/listproducts', array('uses' => 'AdminController@listProduct'));
        Route::get('admin/addproduct', array('uses' => 'AdminController@addProduct'));
        Route::post('admin/addproduct', array('uses' => 'AdminController@addProduct'));
-       Route::get('admin/editproduct/{productId?}', array('uses' => 'AdminController@editProduct'));
+       Route::get('admin/editproduct/{productId}', array('uses' => 'AdminController@editProduct'));
        Route::post('admin/editproduct/{productId?}', array('uses' => 'AdminController@editProduct'));
        Route::post('admin/deleteproduct', array('uses' => 'AdminController@deleteProduct'));
        
@@ -50,7 +53,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
     
     Route::group(['middleware' => 'roles:2'], function () {
+       Route::get('/viewcart', array('uses' => 'CartController@viewCart'));
        Route::get('/logout',array('uses' => 'HomeController@getLogout'));
+       Route::post('/deleteorder','CartController@deleteOrderDetail');
     });
       
 });
