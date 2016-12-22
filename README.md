@@ -1,2 +1,1 @@
-# shoppingcart
-To purchase products
+# Shopping Cart Application
